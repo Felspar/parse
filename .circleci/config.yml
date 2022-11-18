@@ -1,0 +1,55 @@
+version: 2.1
+
+executors:
+  clang:
+    docker:
+    - image: kayess/cpp
+    environment:
+      CC: clang
+      CXX: clang++
+      CXXFLAGS: "-stdlib=libc++"
+      LD_FLAGS: "-stdlib=libc++"
+  clang-asan:
+    docker:
+    - image: kayess/cpp
+    environment:
+      ASAN_OPTIONS: alloc_dealloc_mismatch=0
+      CC: clang
+      CXX: clang++
+      CXXFLAGS: "-stdlib=libc++ -fsanitize=address"
+      LD_FLAGS: "-stdlib=libc++ -fsanitize=address"
+  gcc:
+    docker:
+    - image: kayess/cpp
+    environment:
+      CC: gcc
+      CXX: g++
+
+jobs:
+  build:
+    parameters:
+      compiler:
+        type: executor
+      variant:
+        type: string
+    executor: << parameters.compiler >>
+    steps:
+      - checkout
+      - run:
+          name: cmake
+          command: cmake -G Ninja -S .circleci -B .circleci -DCMAKE_BUILD_TYPE=<< parameters.variant >> $CMAKE_EXTRA
+      - run:
+          name: ninja
+          command: ninja -j1 -C .circleci
+      - run:
+          name: check tests
+          command: ninja -j1 -C .circleci felspar-check
+
+workflows:
+  all-tests:
+    jobs:
+      - build:
+          matrix:
+            parameters:
+              compiler: [gcc, clang, clang-asan]
+              variant: [Debug, Release]

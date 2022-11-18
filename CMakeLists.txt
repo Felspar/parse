@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.10)
+project(felspar-parse)
+
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    add_custom_target(felspar-check)
+    set_property(TARGET felspar-check PROPERTY EXCLUDE_FROM_ALL TRUE)
+    add_custom_target(felspar-examples)
+    include(requirements.cmake)
+endif()
+
+add_library(felspar-parse INTERFACE)
+target_include_directories(felspar-parse INTERFACE ./include)
+
+add_subdirectory(test)
