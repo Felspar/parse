@@ -10,10 +10,16 @@ namespace {
 
     auto const i = suite.test([](auto check) {
         std::array<std::uint8_t, 1> ar{123};
-        std::span<std::uint8_t> sp{ar};
-        check(felspar::parse::binary::unchecked_extract<std::uint8_t>(sp))
+        check(felspar::parse::binary::unchecked_extract<std::uint8_t>(ar))
                 == 123;
-        check(sp.empty()) == true;
+
+        std::array<std::byte, 1> ab{std::byte{124}};
+        check(felspar::parse::binary::unchecked_extract<std::uint8_t>(ab))
+                == 124;
+
+        std::array<char, 1> ac{125};
+        check(felspar::parse::binary::unchecked_extract<std::uint8_t>(ac))
+                == 125;
     });
 
 
