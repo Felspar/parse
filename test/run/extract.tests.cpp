@@ -1,6 +1,8 @@
 #include <felspar/parse/extract.hpp>
 #include <felspar/test.hpp>
 
+#include <vector>
+
 
 namespace {
 
