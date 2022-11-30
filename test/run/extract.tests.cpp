@@ -32,7 +32,7 @@ namespace {
 
     auto const mi8 = suite.test([](auto check) {
         std::vector<std::uint8_t> ar{95, 96};
-        std::span sp{ar};
+        std::span sp{ar.data(), ar.size()};
         check(felspar::parse::binary::extract<std::uint8_t>(sp)) == 95;
         check(felspar::parse::binary::extract<std::uint8_t>(sp)) == 96;
         check(sp.empty()) == true;
