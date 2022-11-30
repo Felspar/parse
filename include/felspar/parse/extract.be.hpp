@@ -49,7 +49,8 @@ namespace felspar::parse::binary::be {
                     felspar::source_location const &loc =
                             felspar::source_location::current()) {
         if (s.size() >= sizeof(T)) {
-            auto const v = unchecked_extract<T>(std::span<T, sizeof(T)>{s});
+            auto const v = unchecked_extract<T>(
+                    std::span<T, sizeof(T)>{s.data(), sizeof(T)});
             s = s.subspan(sizeof(T));
             return v;
         } else {
