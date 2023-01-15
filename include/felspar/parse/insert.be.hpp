@@ -32,4 +32,14 @@ namespace felspar::parse::binary::be {
     }
 
 
+    /// Bytes
+    template<>
+    inline void unchecked_insert(
+            std::span<std::uint8_t, 1> b, std::uint8_t const v) noexcept {
+        b[0] = v;
+    }
+
+    /// 16 bit/WORD
+
+
 }
