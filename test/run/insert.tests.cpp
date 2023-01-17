@@ -21,6 +21,12 @@ namespace {
         felspar::parse::binary::unchecked_insert(ac, std::uint8_t(123));
         check(ac[0]) == 123;
     });
+    auto const i16 = suite.test([](auto check) {
+        std::array<std::uint8_t, 2> ar;
+        felspar::parse::binary::unchecked_insert(ar, std::uint16_t(0x1234));
+        check(ar[0]) == 0x12;
+        check(ar[1]) == 0x34;
+    });
 
 
 }
