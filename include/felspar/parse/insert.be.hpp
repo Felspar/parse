@@ -15,7 +15,7 @@ namespace felspar::parse::binary::be {
 
     template<typename T>
     inline void unchecked_insert(
-            std::span<std::byte, sizeof(T)> b, T const t) noexcept {
+            std::span<std::byte, sizeof(T)> const b, T const t) noexcept {
         unchecked_insert(
                 std::span<std::uint8_t, sizeof(T)>{
                         reinterpret_cast<std::uint8_t *>(b.data()), b.size()},
@@ -23,8 +23,8 @@ namespace felspar::parse::binary::be {
     }
 
     template<typename T>
-    inline void
-            unchecked_insert(std::span<char, sizeof(T)> b, T const t) noexcept {
+    inline void unchecked_insert(
+            std::span<char, sizeof(T)> const b, T const t) noexcept {
         unchecked_insert(
                 std::span<std::uint8_t, sizeof(T)>{
                         reinterpret_cast<std::uint8_t *>(b.data()), b.size()},
@@ -35,7 +35,7 @@ namespace felspar::parse::binary::be {
     /// Bytes
     template<>
     inline void unchecked_insert(
-            std::span<std::uint8_t, 1> b, std::uint8_t const v) noexcept {
+            std::span<std::uint8_t, 1> const b, std::uint8_t const v) noexcept {
         b[0] = v;
     }
 

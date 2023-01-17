@@ -15,13 +15,15 @@ namespace felspar::parse::binary::be {
     T unchecked_extract(std::span<std::uint8_t const, sizeof(T)>) noexcept;
 
     template<typename T>
-    inline T unchecked_extract(std::span<std::byte const, sizeof(T)> s) noexcept {
+    inline T unchecked_extract(
+            std::span<std::byte const, sizeof(T)> const s) noexcept {
         return unchecked_extract<T>(std::span<std::uint8_t const, sizeof(T)>{
                 reinterpret_cast<std::uint8_t const *>(s.data()), s.size()});
     }
 
     template<typename T>
-    inline T unchecked_extract(std::span<char const, sizeof(T)> s) noexcept {
+    inline T unchecked_extract(
+            std::span<char const, sizeof(T)> const s) noexcept {
         return unchecked_extract<T>(std::span<std::uint8_t const, sizeof(T)>{
                 reinterpret_cast<std::uint8_t const *>(s.data()), s.size()});
     }
@@ -30,14 +32,14 @@ namespace felspar::parse::binary::be {
     /// Bytes
     template<>
     inline std::uint8_t unchecked_extract<std::uint8_t>(
-            std::span<std::uint8_t const, 1> s) noexcept {
+            std::span<std::uint8_t const, 1> const s) noexcept {
         return s[0];
     }
 
     /// 16 bit/WORD
     template<>
     inline std::uint16_t unchecked_extract<std::uint16_t>(
-            std::span<std::uint8_t const, 2> s) noexcept {
+            std::span<std::uint8_t const, 2> const s) noexcept {
         return (s[0] << 8) + s[1];
     }
 
