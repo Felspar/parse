@@ -49,4 +49,22 @@ namespace felspar::parse::binary::be {
     }
 
 
+    /// Insert binary representation from a variable into a buffer
+    template<typename T>
+    inline void
+            insert(std::span<std::uint8_t> &s,
+                   T const t,
+                   felspar::source_location const &loc =
+                           felspar::source_location::current()) {
+        if (s.size() >= sizeof(T)) {
+            unchecked_insert(
+                    std::span<std::uint8_t, sizeof(T)>{s.data(), sizeof(T)}, t);
+            s = s.subspan(sizeof(T));
+        } else {
+            throw felspar::stdexcept::logic_error{
+                    "Buffer isn't large enough", loc};
+        }
+    }
+
+
 }
