@@ -59,6 +59,21 @@ namespace felspar::parse::binary::be {
         b[3] = v;
     }
 
+    /// 64 bit/QWORD
+    template<>
+    inline void unchecked_insert(
+            std::span<std::uint8_t, 8> const b,
+            std::uint64_t const v) noexcept {
+        b[0] = v >> 56;
+        b[1] = v >> 48;
+        b[2] = v >> 40;
+        b[3] = v >> 32;
+        b[4] = v >> 24;
+        b[5] = v >> 16;
+        b[6] = v >> 8;
+        b[7] = v;
+    }
+
 
     /// Insert binary representation from a variable into a buffer
     template<typename T>

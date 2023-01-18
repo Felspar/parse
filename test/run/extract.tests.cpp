@@ -33,6 +33,12 @@ namespace {
         check(felspar::parse::binary::unchecked_extract<std::uint32_t>(ar))
                 == 0x1234'5678;
     });
+    auto const i64 = suite.test([](auto check) {
+        std::array<std::uint8_t, 8> ar{0x12, 0x34, 0x56, 0x78,
+                                       0x98, 0x76, 0x54, 0x32};
+        check(felspar::parse::binary::unchecked_extract<std::uint64_t>(ar))
+                == 0x1234'5678'9876'5432;
+    });
 
 
     auto const mi8 = suite.test([](auto check) {

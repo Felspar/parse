@@ -36,6 +36,19 @@ namespace {
         check(ar[2]) == 0x56;
         check(ar[3]) == 0x78;
     });
+    auto const i64 = suite.test([](auto check) {
+        std::array<std::uint8_t, 8> ar;
+        felspar::parse::binary::unchecked_insert(
+                ar, std::uint64_t(0x1234'5678'9876'5432));
+        check(ar[0]) == 0x12;
+        check(ar[1]) == 0x34;
+        check(ar[2]) == 0x56;
+        check(ar[3]) == 0x78;
+        check(ar[4]) == 0x98;
+        check(ar[5]) == 0x76;
+        check(ar[6]) == 0x54;
+        check(ar[7]) == 0x32;
+    });
 
 
     auto const mi8 = suite.test([](auto check) {

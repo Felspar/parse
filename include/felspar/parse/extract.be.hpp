@@ -50,6 +50,16 @@ namespace felspar::parse::binary::be {
         return (s[0] << 24) + (s[1] << 16) + (s[2] << 8) + s[3];
     }
 
+    /// 64 bit/QWORD
+    template<>
+    inline std::uint64_t unchecked_extract<std::uint64_t>(
+            std::span<std::uint8_t const, 8> const s) noexcept {
+        return (std::int64_t(s[0]) << 56) + (std::int64_t(s[1]) << 48)
+                + (std::int64_t(s[2]) << 40) + (std::int64_t(s[3]) << 32)
+                + (std::int64_t(s[4]) << 24) + (std::int64_t(s[5]) << 16)
+                + (std::int64_t(s[6]) << 8) + std::int64_t(s[7]);
+    }
+
 
     /// Extract from a variable length data span
     template<typename T>
