@@ -2,6 +2,7 @@
 
 
 #include <felspar/parse/insert.be.hpp>
+#include <felspar/parse/insert.le.hpp>
 
 
 namespace felspar::parse::binary {
