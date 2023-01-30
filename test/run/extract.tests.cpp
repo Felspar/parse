@@ -47,21 +47,21 @@ namespace {
     auto const i32 = suite.test([](auto check) {
         std::array<std::uint8_t, 4> ar{0x12, 0x34, 0x56, 0x78};
         check(felspar::parse::binary::unchecked_extract<std::uint32_t>(ar))
-                == 0x1234'5678;
+                == 0x1234'5678UL;
         check(felspar::parse::binary::be::unchecked_extract<std::uint32_t>(ar))
-                == 0x1234'5678;
+                == 0x1234'5678UL;
         check(felspar::parse::binary::le::unchecked_extract<std::uint32_t>(ar))
-                == 0x7856'3412;
+                == 0x7856'3412UL;
     });
     auto const i64 = suite.test([](auto check) {
         std::array<std::uint8_t, 8> ar{0x12, 0x34, 0x56, 0x78,
                                        0x98, 0x76, 0x54, 0x32};
         check(felspar::parse::binary::unchecked_extract<std::uint64_t>(ar))
-                == 0x1234'5678'9876'5432;
+                == 0x1234'5678'9876'5432UL;
         check(felspar::parse::binary::be::unchecked_extract<std::uint64_t>(ar))
-                == 0x1234'5678'9876'5432;
+                == 0x1234'5678'9876'5432UL;
         check(felspar::parse::binary::le::unchecked_extract<std::uint64_t>(ar))
-                == 0x3254'7698'7856'3412;
+                == 0x3254'7698'7856'3412UL;
     });
 
 
