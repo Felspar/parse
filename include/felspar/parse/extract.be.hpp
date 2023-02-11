@@ -29,6 +29,14 @@ namespace felspar::parse::binary::be {
     }
 
 
+    /// boolean
+    template<>
+    inline bool unchecked_extract<bool>(
+            std::span<std::uint8_t const, 1> const s) noexcept {
+        return s[0];
+    }
+
+
     /// Bytes
     template<>
     inline std::uint8_t unchecked_extract<std::uint8_t>(

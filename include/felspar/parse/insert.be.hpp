@@ -32,6 +32,15 @@ namespace felspar::parse::binary::be {
     }
 
 
+    /// boolean
+    template<>
+    inline void unchecked_insert(
+            std::span<std::uint8_t, 1> const b, bool const v) noexcept {
+        static_assert(sizeof(bool) == 1);
+        b[0] = v;
+    }
+
+
     /// Bytes
     template<>
     inline void unchecked_insert(
