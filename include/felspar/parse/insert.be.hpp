@@ -3,6 +3,7 @@
 
 #include <felspar/exceptions.hpp>
 
+#include <concepts>
 #include <span>
 
 
@@ -10,9 +11,18 @@ namespace felspar::parse::binary::be {
 
 
     /// Insert data of the requested type into the memory described by the span
-    template<typename T>
+    template<std::unsigned_integral T>
     void unchecked_insert(std::span<std::uint8_t, sizeof(T)>, T) noexcept;
 
+    template<std::signed_integral T>
+    inline void unchecked_insert(
+            std::span<std::uint8_t, sizeof(T)> const s, T const t) noexcept {
+        unchecked_insert(s, std::make_unsigned_t<T>(t));
+    }
+
+
+    /// We also want to be able to insert into buffers of other slightly
+    /// different types
     template<typename T>
     inline void unchecked_insert(
             std::span<std::byte, sizeof(T)> const b, T const t) noexcept {
