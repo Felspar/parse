@@ -5,10 +5,10 @@
 #include <type_traits>
 
 
-namespace felspar::parse::detail {
+namespace felspar::parse::concepts {
 
 
-    /// Shims for concepts missing on Android ;-(
+    /// Shims for concepts missing on Android :-(
     template<class T>
     concept integral = std::is_integral_v<T>;
 

@@ -11,10 +11,10 @@ namespace felspar::parse::binary::be {
 
 
     /// Insert data of the requested type into the memory described by the span
-    template<detail::unsigned_integral T>
+    template<concepts::unsigned_integral T>
     void unchecked_insert(std::span<std::byte, sizeof(T)>, T) noexcept;
 
-    template<detail::signed_integral T>
+    template<concepts::signed_integral T>
     inline void unchecked_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) noexcept {
         unchecked_insert(s, std::make_unsigned_t<T>(t));

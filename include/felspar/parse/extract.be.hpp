@@ -12,10 +12,10 @@ namespace felspar::parse::binary::be {
 
     /// Extract an instance of a requested type from the memory pointed to by
     /// the span
-    template<detail::unsigned_integral T>
+    template<concepts::unsigned_integral T>
     T unchecked_extract(std::span<std::byte const, sizeof(T)>) noexcept;
 
-    template<detail::signed_integral T>
+    template<concepts::signed_integral T>
     T unchecked_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
         return unchecked_extract<std::make_unsigned_t<T>>(s);
     }
