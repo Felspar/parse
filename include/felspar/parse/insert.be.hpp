@@ -12,16 +12,16 @@ namespace felspar::parse::binary::be {
 
     /// 8 bit/byte
     template<concepts::unsigned_integral T>
-    inline void
-            write_value(std::span<std::byte, 1> const b, T const v) noexcept {
+    inline void unchecked_insert(
+            std::span<std::byte, 1> const b, T const v) noexcept {
         static_assert(sizeof(T) == 1);
         b[0] = std::byte(v);
     }
 
     /// 16 bit/WORD
     template<concepts::unsigned_integral T>
-    inline void
-            write_value(std::span<std::byte, 2> const b, T const v) noexcept {
+    inline void unchecked_insert(
+            std::span<std::byte, 2> const b, T const v) noexcept {
         static_assert(sizeof(T) == 2);
         b[0] = std::byte(v >> 8);
         b[1] = std::byte(v);
@@ -29,8 +29,8 @@ namespace felspar::parse::binary::be {
 
     /// 32 bit/DWORD
     template<concepts::unsigned_integral T>
-    inline void
-            write_value(std::span<std::byte, 4> const b, T const v) noexcept {
+    inline void unchecked_insert(
+            std::span<std::byte, 4> const b, T const v) noexcept {
         static_assert(sizeof(T) == 4);
         b[0] = std::byte(v >> 24);
         b[1] = std::byte(v >> 16);
@@ -40,8 +40,8 @@ namespace felspar::parse::binary::be {
 
     /// 64 bit/QWORD
     template<concepts::unsigned_integral T>
-    inline void
-            write_value(std::span<std::byte, 8> const b, T const v) noexcept {
+    inline void unchecked_insert(
+            std::span<std::byte, 8> const b, T const v) noexcept {
         static_assert(sizeof(T) == 8);
         b[0] = std::byte(v >> 56);
         b[1] = std::byte(v >> 48);
@@ -54,13 +54,7 @@ namespace felspar::parse::binary::be {
     }
 
 
-    /// Insert data of the requested type into the memory described by the span
-    template<concepts::unsigned_integral T>
-    void unchecked_insert(
-            std::span<std::byte, sizeof(T)> const s, T const t) noexcept {
-        write_value<T>(s, t);
-    }
-
+    /// Handle signed types through use of unsigned type of the same size
     template<concepts::signed_integral T>
     inline void unchecked_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) noexcept {
