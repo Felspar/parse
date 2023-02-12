@@ -107,46 +107,46 @@ namespace {
 
     auto const mi8 = suite.test([](auto check) {
         {
-            std::vector<std::uint8_t> ar(6);
-            std::span<std::uint8_t> sp{ar.data(), ar.size()};
+            std::vector<std::byte> ar(6);
+            std::span<std::byte> sp{ar.data(), ar.size()};
             felspar::parse::binary::insert(sp, std::uint16_t(0x1234));
             check(sp.size()) == 4u;
-            check(ar[0]) == 0x12;
-            check(ar[1]) == 0x34;
+            check(ar[0]) == std::byte(0x12);
+            check(ar[1]) == std::byte(0x34);
             felspar::parse::binary::insert(sp, std::uint32_t(0x5678'9876));
             check(sp.size()) == 0u;
-            check(ar[2]) == 0x56;
-            check(ar[3]) == 0x78;
-            check(ar[4]) == 0x98;
-            check(ar[5]) == 0x76;
+            check(ar[2]) == std::byte(0x56);
+            check(ar[3]) == std::byte(0x78);
+            check(ar[4]) == std::byte(0x98);
+            check(ar[5]) == std::byte(0x76);
         }
         {
-            std::vector<std::uint8_t> ar(6);
-            std::span<std::uint8_t> sp{ar.data(), ar.size()};
+            std::vector<std::byte> ar(6);
+            std::span<std::byte> sp{ar.data(), ar.size()};
             felspar::parse::binary::be::insert(sp, std::uint16_t(0x1234));
             check(sp.size()) == 4u;
-            check(ar[0]) == 0x12;
-            check(ar[1]) == 0x34;
+            check(ar[0]) == std::byte(0x12);
+            check(ar[1]) == std::byte(0x34);
             felspar::parse::binary::be::insert(sp, std::uint32_t(0x5678'9876));
             check(sp.size()) == 0u;
-            check(ar[2]) == 0x56;
-            check(ar[3]) == 0x78;
-            check(ar[4]) == 0x98;
-            check(ar[5]) == 0x76;
+            check(ar[2]) == std::byte(0x56);
+            check(ar[3]) == std::byte(0x78);
+            check(ar[4]) == std::byte(0x98);
+            check(ar[5]) == std::byte(0x76);
         }
         {
-            std::vector<std::uint8_t> ar(6);
-            std::span<std::uint8_t> sp{ar.data(), ar.size()};
+            std::vector<std::byte> ar(6);
+            std::span<std::byte> sp{ar.data(), ar.size()};
             felspar::parse::binary::le::insert(sp, std::uint16_t(0x1234));
             check(sp.size()) == 4u;
-            check(ar[1]) == 0x12;
-            check(ar[0]) == 0x34;
+            check(ar[1]) == std::byte(0x12);
+            check(ar[0]) == std::byte(0x34);
             felspar::parse::binary::le::insert(sp, std::uint32_t(0x5678'9876));
             check(sp.size()) == 0u;
-            check(ar[5]) == 0x56;
-            check(ar[4]) == 0x78;
-            check(ar[3]) == 0x98;
-            check(ar[2]) == 0x76;
+            check(ar[5]) == std::byte(0x56);
+            check(ar[4]) == std::byte(0x78);
+            check(ar[3]) == std::byte(0x98);
+            check(ar[2]) == std::byte(0x76);
         }
     });
 
