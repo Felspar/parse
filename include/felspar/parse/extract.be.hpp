@@ -66,6 +66,21 @@ namespace felspar::parse::binary::be {
     }
 
     /// 64 bit/QWORD
+#if ULONG_MAX == ULLONG_MAX and ULONG_MAX == 18'446'744'073'709'551'615UL
+    template<>
+    inline unsigned long unchecked_extract<unsigned long>(
+            std::span<std::byte const, 8> const s) noexcept {
+        return (std::uint64_t(s[0]) << 56) + (std::uint64_t(s[1]) << 48)
+                + (std::uint64_t(s[2]) << 40) + (std::uint64_t(s[3]) << 32)
+                + (std::uint64_t(s[4]) << 24) + (std::uint64_t(s[5]) << 16)
+                + (std::uint64_t(s[6]) << 8) + std::uint64_t(s[7]);
+    }
+    template<>
+    inline unsigned long long unchecked_extract<unsigned long long>(
+            std::span<std::byte const, 8> const s) noexcept {
+                return unchecked_extract<unsigned long>(s);
+    }
+#else
     template<>
     inline std::uint64_t unchecked_extract<std::uint64_t>(
             std::span<std::byte const, 8> const s) noexcept {
@@ -74,6 +89,7 @@ namespace felspar::parse::binary::be {
                 + (std::uint64_t(s[4]) << 24) + (std::uint64_t(s[5]) << 16)
                 + (std::uint64_t(s[6]) << 8) + std::uint64_t(s[7]);
     }
+#endif
 
 
     /// Extract from a variable length data span
