@@ -69,10 +69,10 @@ namespace felspar::parse::binary::be {
     template<>
     inline std::uint64_t unchecked_extract<std::uint64_t>(
             std::span<std::byte const, 8> const s) noexcept {
-        return (std::int64_t(s[0]) << 56) + (std::int64_t(s[1]) << 48)
-                + (std::int64_t(s[2]) << 40) + (std::int64_t(s[3]) << 32)
-                + (std::int64_t(s[4]) << 24) + (std::int64_t(s[5]) << 16)
-                + (std::int64_t(s[6]) << 8) + std::int64_t(s[7]);
+        return (std::uint64_t(s[0]) << 56) + (std::uint64_t(s[1]) << 48)
+                + (std::uint64_t(s[2]) << 40) + (std::uint64_t(s[3]) << 32)
+                + (std::uint64_t(s[4]) << 24) + (std::uint64_t(s[5]) << 16)
+                + (std::uint64_t(s[6]) << 8) + std::uint64_t(s[7]);
     }
 
 
