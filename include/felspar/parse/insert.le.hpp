@@ -53,19 +53,12 @@ namespace felspar::parse::binary::le {
     template<typename T>
     inline void unchecked_insert(
             std::span<std::uint8_t, sizeof(T)> const b, T const t) noexcept {
-        unchecked_insert(
-                std::span<std::byte, sizeof(T)>{
-                        reinterpret_cast<std::byte *>(b.data()), b.size()},
-                t);
+        unchecked_insert(std::as_writable_bytes(b), t);
     }
-
     template<typename T>
     inline void unchecked_insert(
             std::span<char, sizeof(T)> const b, T const t) noexcept {
-        unchecked_insert(
-                std::span<std::byte, sizeof(T)>{
-                        reinterpret_cast<std::byte *>(b.data()), b.size()},
-                t);
+        unchecked_insert(std::as_writable_bytes(b), t);
     }
 
 
