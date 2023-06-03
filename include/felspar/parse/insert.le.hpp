@@ -2,6 +2,7 @@
 
 
 #include <felspar/exceptions.hpp>
+#include <felspar/parse/concepts.hpp>
 
 #include <span>
 

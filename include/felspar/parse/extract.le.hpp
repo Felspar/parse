@@ -13,18 +13,17 @@ namespace felspar::parse::binary::le {
     template<typename T>
     T unchecked_extract(std::span<std::byte const, sizeof(T)>) noexcept;
 
+
     template<typename T>
     inline T unchecked_extract(
             std::span<std::uint8_t const, sizeof(T)> const s) noexcept {
-        return unchecked_extract<T>(std::span<std::byte const, sizeof(T)>{
-                reinterpret_cast<std::byte const *>(s.data()), s.size()});
+        return unchecked_extract<T>(std::as_bytes(s));
     }
 
     template<typename T>
     inline T unchecked_extract(
             std::span<char const, sizeof(T)> const s) noexcept {
-        return unchecked_extract<T>(std::span<std::byte const, sizeof(T)>{
-                reinterpret_cast<std::byte const *>(s.data()), s.size()});
+        return unchecked_extract<T>(std::as_bytes(s));
     }
 
 
