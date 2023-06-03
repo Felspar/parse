@@ -3,8 +3,7 @@
 
 #include <felspar/exceptions.hpp>
 #include <felspar/parse/concepts.hpp>
-
-#include <span>
+#include <felspar/parse/extract.detail.hpp>
 
 
 namespace felspar::parse::binary::native {
@@ -12,13 +11,11 @@ namespace felspar::parse::binary::native {
 
     /// ## Extract a value without checking that the span is large enough
     template<concepts::numeric T>
-    T unchecked_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
+    inline T unchecked_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
         if constexpr (sizeof(T) == 1u) {
             return static_cast<T>(s[0]);
         } else {
-            T into;
-            std::copy(s.begin(), s.end(), reinterpret_cast<std::byte *>(&into));
-            return into;
+            return detail::native_extract<T>(s);
         }
     }
 
