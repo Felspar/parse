@@ -1,3 +1,4 @@
+#pragma once
 
 
 #include <felspar/exceptions.hpp>
