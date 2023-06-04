@@ -1,10 +1,9 @@
 #pragma once
 
 
-#include <felspar/exceptions.hpp>
 #include <felspar/parse/concepts.hpp>
-
-#include <span>
+#include <felspar/parse/exceptions.hpp>
+#include <felspar/parse/insert.detail.hpp>
 
 
 namespace felspar::parse::binary::native {
@@ -52,8 +51,7 @@ namespace felspar::parse::binary::native {
                     std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
             s = s.subspan(sizeof(T));
         } else {
-            throw felspar::stdexcept::logic_error{
-                    "Buffer isn't large enough", loc};
+            throw buffer_too_small{loc};
         }
     }
 

@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <felspar/exceptions.hpp>
 #include <felspar/parse/concepts.hpp>
 #include <felspar/parse/endian.hpp>
+#include <felspar/parse/exceptions.hpp>
 #include <felspar/parse/extract.detail.hpp>
 
 
@@ -42,8 +42,7 @@ namespace felspar::parse::binary::be {
             s = s.subspan(sizeof(T));
             return v;
         } else {
-            throw felspar::stdexcept::logic_error{
-                    "Buffer doesn't have enough data", loc};
+            throw buffer_too_small{loc};
         }
     }
 
