@@ -16,7 +16,11 @@ namespace felspar::parse::binary::native {
     template<concepts::numeric T>
     inline void unchecked_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) {
-        detail::native_insert(s, t);
+        if constexpr (sizeof(T) == 1) {
+            s[0] = std::byte{t};
+        } else {
+            detail::native_insert(s, t);
+        }
     }
 
     template<concepts::numeric T>
