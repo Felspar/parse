@@ -11,7 +11,7 @@ namespace felspar::parse::binary::be {
 
 
     template<concepts::numeric T>
-    inline void unchecked_insert(std::span<std::byte, sizeof(T)> s, T const t) {
+    void unchecked_insert(std::span<std::byte, sizeof(T)> s, T const t) {
         if constexpr (sizeof(T) == 1u) {
             s[0] = static_cast<std::byte>(t);
         } else if constexpr (endian::native == endian::big) {
@@ -25,13 +25,13 @@ namespace felspar::parse::binary::be {
     /// We also want to be able to insert into buffers of other slightly
     /// different types
     template<typename T>
-    inline void unchecked_insert(
+    void unchecked_insert(
             std::span<std::uint8_t, sizeof(T)> const b, T const t) noexcept {
         unchecked_insert(std::as_writable_bytes(b), t);
     }
 
     template<typename T>
-    inline void unchecked_insert(
+    void unchecked_insert(
             std::span<char, sizeof(T)> const b, T const t) noexcept {
         unchecked_insert(std::as_writable_bytes(b), t);
     }
@@ -39,7 +39,7 @@ namespace felspar::parse::binary::be {
 
     /// Insert binary representation from a variable into a buffer
     template<typename T>
-    inline void
+    void
             insert(std::span<std::byte> &s,
                    T const t,
                    felspar::source_location const &loc =

@@ -14,8 +14,7 @@ namespace felspar::parse::binary::native {
 
     /// ### Insert into the buffer without checking the length
     template<concepts::numeric T>
-    inline void unchecked_insert(
-            std::span<std::byte, sizeof(T)> const s, T const t) {
+    void unchecked_insert(std::span<std::byte, sizeof(T)> const s, T const t) {
         if constexpr (sizeof(T) == 1) {
             s[0] = std::byte{t};
         } else {
@@ -24,19 +23,18 @@ namespace felspar::parse::binary::native {
     }
 
     template<concepts::numeric T>
-    inline void unchecked_insert(
-            std::span<std::uint8_t, sizeof(T)> const s, T const t) {
+    void unchecked_insert(std::span<std::uint8_t, sizeof(T)> const s, T const t) {
         unchecked_insert(std::as_writable_bytes(s), t);
     }
     template<concepts::numeric T>
-    inline void unchecked_insert(std::span<char, sizeof(T)> const s, T const t) {
+    void unchecked_insert(std::span<char, sizeof(T)> const s, T const t) {
         unchecked_insert(std::as_writable_bytes(s), t);
     }
 
 
     /// ### Insert into buffer after checking the buffer length
     template<concepts::numeric T>
-    inline void
+    void
             insert(std::span<std::byte> &s,
                    T const t,
                    felspar::source_location const &loc =

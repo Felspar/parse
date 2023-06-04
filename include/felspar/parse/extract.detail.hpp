@@ -8,8 +8,7 @@ namespace felspar::parse::binary::detail {
 
 
     template<typename T>
-    inline T native_extract(
-            std::span<std::byte const, sizeof(T)> const s) noexcept {
+    T native_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
         T into;
         std::copy(
                 s.begin(), s.end(),
@@ -17,8 +16,7 @@ namespace felspar::parse::binary::detail {
         return into;
     }
     template<typename T>
-    inline T non_native_extract(
-            std::span<std::byte const, sizeof(T)> const s) noexcept {
+    T non_native_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
         T into;
         std::copy(
                 s.rbegin(), s.rend(),

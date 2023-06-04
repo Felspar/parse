@@ -33,10 +33,10 @@ namespace felspar::parse::binary::be {
 
     /// Extract from a variable length data span
     template<typename T>
-    inline T
-            extract(std::span<std::byte const> &s,
-                    felspar::source_location const &loc =
-                            felspar::source_location::current()) {
+    T extract(
+            std::span<std::byte const> &s,
+            felspar::source_location const &loc =
+                    felspar::source_location::current()) {
         buffer_too_small::check(sizeof(T), s.size(), loc);
         auto const v = unchecked_extract<T>(
                 std::span<std::byte const, sizeof(T)>{s.data(), sizeof(T)});
