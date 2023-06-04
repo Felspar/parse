@@ -10,14 +10,13 @@ namespace felspar::parse::binary::detail {
     template<typename T>
     inline void native_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) noexcept {
-        auto const addr = reinterpret_cast<std::byte const *>(&t);
-        std::copy(addr, addr + sizeof(T), s.begin());
+        auto const input = std::as_bytes(std::span{&t, 1});
+        std::copy(input.begin(), input.end(), s.begin());
     }
     template<typename T>
     inline void non_native_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) noexcept {
-        auto const input =
-                std::span{reinterpret_cast<std::byte const *>(&t), sizeof(T)};
+        auto const input = std::as_bytes(std::span{&t, 1});
         std::copy(input.rbegin(), input.rend(), s.begin());
     }
 
