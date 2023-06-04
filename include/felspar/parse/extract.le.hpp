@@ -21,7 +21,8 @@ namespace felspar::parse::binary::le {
         }
     }
     template<concepts::numeric T>
-    T unchecked_extract(std::span<std::uint8_t const, sizeof(T)> const s) noexcept {
+    T unchecked_extract(
+            std::span<std::uint8_t const, sizeof(T)> const s) noexcept {
         return unchecked_extract<T>(std::as_bytes(s));
     }
     template<concepts::numeric T>

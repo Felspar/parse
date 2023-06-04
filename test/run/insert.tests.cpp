@@ -14,7 +14,8 @@ namespace {
 
     auto const i8 = suite.test([](auto check) {
         std::array<std::uint8_t, 1> ar1, ar2, ar3;
-        felspar::parse::binary::native::unchecked_insert(ar1, std::uint8_t(123));
+        felspar::parse::binary::native::unchecked_insert(
+                ar1, std::uint8_t(123));
         check(ar1[0]) == 123;
         felspar::parse::binary::be::unchecked_insert(ar2, std::uint8_t(123));
         check(ar2[0]) == 123;
@@ -22,7 +23,8 @@ namespace {
         check(ar3[0]) == 123;
 
         std::array<std::byte, 1> ab1, ab2, ab3;
-        felspar::parse::binary::native::unchecked_insert(ab1, std::uint8_t(123));
+        felspar::parse::binary::native::unchecked_insert(
+                ab1, std::uint8_t(123));
         check(ab1[0]) == std::byte(123);
         felspar::parse::binary::be::unchecked_insert(ab2, std::uint8_t(123));
         check(ab2[0]) == std::byte(123);
@@ -30,7 +32,8 @@ namespace {
         check(ab3[0]) == std::byte(123);
 
         std::array<char, 1> ac1, ac2, ac3;
-        felspar::parse::binary::native::unchecked_insert(ac1, std::uint8_t(123));
+        felspar::parse::binary::native::unchecked_insert(
+                ac1, std::uint8_t(123));
         check(ac1[0]) == 123;
         felspar::parse::binary::be::unchecked_insert(ac2, std::uint8_t(123));
         check(ac2[0]) == 123;
@@ -39,7 +42,8 @@ namespace {
     });
     auto const i16 = suite.test([](auto check) {
         std::array<std::uint8_t, 2> ar1, ar2, ar3;
-        felspar::parse::binary::native::unchecked_insert(ar1, std::uint16_t(0x1234));
+        felspar::parse::binary::native::unchecked_insert(
+                ar1, std::uint16_t(0x1234));
         check(ar1[1]) == 0x12;
         check(ar1[0]) == 0x34;
         felspar::parse::binary::be::unchecked_insert(
@@ -115,7 +119,8 @@ namespace {
             check(sp.size()) == 4u;
             check(ar[0]) == std::byte(0x34);
             check(ar[1]) == std::byte(0x12);
-            felspar::parse::binary::native::insert(sp, std::uint32_t(0x5678'9876));
+            felspar::parse::binary::native::insert(
+                    sp, std::uint32_t(0x5678'9876));
             check(sp.size()) == 0u;
             check(ar[2]) == std::byte(0x76);
             check(ar[3]) == std::byte(0x98);
