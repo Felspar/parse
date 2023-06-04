@@ -16,16 +16,7 @@ namespace felspar::parse::binary::native {
     template<concepts::numeric T>
     inline void unchecked_insert(
             std::span<std::byte, sizeof(T)> const s, T const t) {
-        std::span<std::byte const, sizeof(T)> b{
-                reinterpret_cast<std::byte const *>(&t), sizeof(T)};
-        std::copy(b.begin(), b.end(), s.begin());
-    }
-    inline void unchecked_insert(std::span<std::byte, 1> s, std::byte const i) {
-        s[0] = i;
-    }
-    inline void
-            unchecked_insert(std::span<std::byte, 1> s, std::uint8_t const i) {
-        s[0] = std::byte{i};
+        detail::native_insert(s, t);
     }
 
     template<concepts::numeric T>
