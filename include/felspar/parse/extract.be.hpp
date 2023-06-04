@@ -36,14 +36,11 @@ namespace felspar::parse::binary::be {
             extract(std::span<std::byte const> &s,
                     felspar::source_location const &loc =
                             felspar::source_location::current()) {
-        if (s.size() >= sizeof(T)) {
-            auto const v = unchecked_extract<T>(
-                    std::span<std::byte const, sizeof(T)>{s.data(), sizeof(T)});
-            s = s.subspan(sizeof(T));
-            return v;
-        } else {
-            throw buffer_too_small{sizeof(T), s.size(), loc};
-        }
+        buffer_too_small::check(sizeof(T), s.size(), loc);
+        auto const v = unchecked_extract<T>(
+                std::span<std::byte const, sizeof(T)>{s.data(), sizeof(T)});
+        s = s.subspan(sizeof(T));
+        return v;
     }
 
 

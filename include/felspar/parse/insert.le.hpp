@@ -41,13 +41,10 @@ namespace felspar::parse::binary::le {
                    T const t,
                    felspar::source_location const &loc =
                            felspar::source_location::current()) {
-        if (s.size() >= sizeof(T)) {
-            unchecked_insert(
-                    std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
-            s = s.subspan(sizeof(T));
-        } else {
-            throw buffer_too_small{sizeof(T), s.size(), loc};
-        }
+        buffer_too_small::check(sizeof(T), s.size(), loc);
+        unchecked_insert(
+                std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
+        s = s.subspan(sizeof(T));
     }
 
 
