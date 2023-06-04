@@ -49,7 +49,7 @@ namespace felspar::parse::binary::be {
                     std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
             s = s.subspan(sizeof(T));
         } else {
-            throw buffer_too_small{loc};
+            throw buffer_too_small{sizeof(T), s.size(), loc};
         }
     }
 

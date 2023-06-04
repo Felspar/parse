@@ -42,7 +42,7 @@ namespace felspar::parse::binary::le {
             s = s.subspan(sizeof(T));
             return v;
         } else {
-            throw buffer_too_small{loc};
+            throw buffer_too_small{sizeof(T), s.size(), loc};
         }
     }
 
