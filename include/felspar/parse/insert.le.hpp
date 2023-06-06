@@ -1,88 +1,50 @@
 #pragma once
 
 
-#include <felspar/exceptions.hpp>
-
-#include <span>
+#include <felspar/parse/concepts.hpp>
+#include <felspar/parse/endian.hpp>
+#include <felspar/parse/exceptions.hpp>
+#include <felspar/parse/insert.detail.hpp>
 
 
 namespace felspar::parse::binary::le {
 
 
-    /// Bytes
-    template<concepts::unsigned_integral T>
-    inline void unchecked_insert(
-            std::span<std::byte, 1> const b, T const v) noexcept {
-        b[0] = std::byte(v);
-    }
-
-    /// 16 bit/WORD
-    template<concepts::unsigned_integral T>
-    inline void unchecked_insert(
-            std::span<std::byte, 2> const b, T const v) noexcept {
-        b[1] = std::byte(v >> 8);
-        b[0] = std::byte(v);
-    }
-
-    /// 32 bit/DWORD
-    template<concepts::unsigned_integral T>
-    inline void unchecked_insert(
-            std::span<std::byte, 4> const b, T const v) noexcept {
-        b[3] = std::byte(v >> 24);
-        b[2] = std::byte(v >> 16);
-        b[1] = std::byte(v >> 8);
-        b[0] = std::byte(v);
-    }
-
-    /// 64 bit/QWORD
-    template<concepts::unsigned_integral T>
-    inline void unchecked_insert(
-            std::span<std::byte, 8> const b, T const v) noexcept {
-        b[7] = std::byte(v >> 56);
-        b[6] = std::byte(v >> 48);
-        b[5] = std::byte(v >> 40);
-        b[4] = std::byte(v >> 32);
-        b[3] = std::byte(v >> 24);
-        b[2] = std::byte(v >> 16);
-        b[1] = std::byte(v >> 8);
-        b[0] = std::byte(v);
+    template<concepts::numeric T>
+    void unchecked_insert(std::span<std::byte, sizeof(T)> s, T const t) {
+        if constexpr (sizeof(T) == 1u) {
+            s[0] = static_cast<std::byte>(t);
+        } else if constexpr (endian::native == endian::little) {
+            detail::native_insert(s, t);
+        } else {
+            detail::non_native_insert(s, t);
+        }
     }
 
 
     template<typename T>
-    inline void unchecked_insert(
+    void unchecked_insert(
             std::span<std::uint8_t, sizeof(T)> const b, T const t) noexcept {
-        unchecked_insert(
-                std::span<std::byte, sizeof(T)>{
-                        reinterpret_cast<std::byte *>(b.data()), b.size()},
-                t);
+        unchecked_insert(std::as_writable_bytes(b), t);
     }
-
     template<typename T>
-    inline void unchecked_insert(
+    void unchecked_insert(
             std::span<char, sizeof(T)> const b, T const t) noexcept {
-        unchecked_insert(
-                std::span<std::byte, sizeof(T)>{
-                        reinterpret_cast<std::byte *>(b.data()), b.size()},
-                t);
+        unchecked_insert(std::as_writable_bytes(b), t);
     }
 
 
     /// Insert binary representation from a variable into a buffer
     template<typename T>
-    inline void
+    void
             insert(std::span<std::byte> &s,
                    T const t,
                    felspar::source_location const &loc =
                            felspar::source_location::current()) {
-        if (s.size() >= sizeof(T)) {
-            unchecked_insert(
-                    std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
-            s = s.subspan(sizeof(T));
-        } else {
-            throw felspar::stdexcept::logic_error{
-                    "Buffer isn't large enough", loc};
-        }
+        buffer_too_small::check(sizeof(T), s.size(), loc);
+        unchecked_insert(
+                std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);
+        s = s.subspan(sizeof(T));
     }
 
 

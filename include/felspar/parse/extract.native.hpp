@@ -2,24 +2,24 @@
 
 
 #include <felspar/parse/concepts.hpp>
-#include <felspar/parse/endian.hpp>
 #include <felspar/parse/exceptions.hpp>
 #include <felspar/parse/extract.detail.hpp>
 
 
-namespace felspar::parse::binary::le {
+namespace felspar::parse::binary::native {
 
 
+    /// ## Extract a value without checking that the span is large enough
     template<concepts::numeric T>
     T unchecked_extract(std::span<std::byte const, sizeof(T)> const s) noexcept {
         if constexpr (sizeof(T) == 1u) {
             return static_cast<T>(s[0]);
-        } else if constexpr (endian::native == endian::little) {
-            return detail::native_extract<T>(s);
         } else {
-            return detail::non_native_extract<T>(s);
+            return detail::native_extract<T>(s);
         }
     }
+
+
     template<concepts::numeric T>
     T unchecked_extract(
             std::span<std::uint8_t const, sizeof(T)> const s) noexcept {
@@ -31,8 +31,8 @@ namespace felspar::parse::binary::le {
     }
 
 
-    /// Extract from a variable length data span
-    template<typename T>
+    /// ## Extract a numeric from a buffer
+    template<concepts::numeric T>
     T extract(
             std::span<std::byte const> &s,
             felspar::source_location const &loc =
