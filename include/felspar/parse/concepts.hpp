@@ -18,8 +18,7 @@ namespace felspar::parse::concepts {
     concept signed_integral = integral<T> and std::is_signed_v<T>;
 
     template<class T>
-    concept unsigned_integral = integral<T> and not
-    signed_integral<T>;
+    concept unsigned_integral = integral<T> and not signed_integral<T>;
 
 
     template<class T>
