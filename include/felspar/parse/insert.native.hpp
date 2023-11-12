@@ -5,6 +5,8 @@
 #include <felspar/parse/exceptions.hpp>
 #include <felspar/parse/insert.detail.hpp>
 
+#include <cstdint>
+
 
 namespace felspar::parse::binary::native {
 

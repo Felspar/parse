@@ -6,6 +6,8 @@
 #include <felspar/parse/exceptions.hpp>
 #include <felspar/parse/extract.detail.hpp>
 
+#include <cstdint>
+
 
 namespace felspar::parse::binary::be {
 
