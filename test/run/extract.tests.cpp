@@ -3,6 +3,7 @@
 #include <felspar/parse/extract.native.hpp>
 #include <felspar/test.hpp>
 
+#include <array>
 #include <vector>
 
 
