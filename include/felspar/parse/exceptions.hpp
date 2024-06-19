@@ -19,11 +19,11 @@ namespace felspar::parse::binary {
                 felspar::source_location const &loc =
                         felspar::source_location::current())
         : stdexcept::logic_error{
-                "Buffer is too small\n"
-                "Wants " + std::to_string(wants)
-                        + " bytes, but only has " + std::to_string(has)
-                        + " bytes",
-                loc} {}
+                  "Buffer is too small\n"
+                  "Wants " + std::to_string(wants)
+                          + " bytes, but only has " + std::to_string(has)
+                          + " bytes",
+                  loc} {}
 
         static void
                 check(std::size_t const wants,
