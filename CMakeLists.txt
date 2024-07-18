@@ -11,6 +11,6 @@ endif()
 add_library(felspar-parse INTERFACE)
 target_include_directories(felspar-parse INTERFACE ./include)
 target_compile_features(felspar-parse INTERFACE cxx_std_20)
-target_link_libraries(felspar-parse INTERFACE felspar-exceptions felspar-test)
+target_link_libraries(felspar-parse INTERFACE felspar-coro felspar-exceptions felspar-test)
 
 add_subdirectory(test)
