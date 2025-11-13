@@ -38,11 +38,10 @@ namespace felspar::parse::binary::le {
 
     /// Insert binary representation from a variable into a buffer
     template<typename T>
-    void
-            insert(std::span<std::byte> &s,
-                   T const t,
-                   felspar::source_location const &loc =
-                           felspar::source_location::current()) {
+    void insert(
+            std::span<std::byte> &s,
+            T const t,
+            std::source_location const &loc = std::source_location::current()) {
         buffer_too_small::check(sizeof(T), s.size(), loc);
         unchecked_insert(
                 std::span<std::byte, sizeof(T)>{s.data(), sizeof(T)}, t);

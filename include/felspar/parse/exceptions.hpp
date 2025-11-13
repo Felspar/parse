@@ -10,14 +10,14 @@ namespace felspar::parse::binary {
     class buffer_too_small : public stdexcept::logic_error {
       public:
         buffer_too_small(
-                felspar::source_location const &loc =
-                        felspar::source_location::current())
+                std::source_location const &loc =
+                        std::source_location::current())
         : stdexcept::logic_error{"Buffer is too small", loc} {}
         buffer_too_small(
                 std::size_t const wants,
                 std::size_t const has,
-                felspar::source_location const &loc =
-                        felspar::source_location::current())
+                std::source_location const &loc =
+                        std::source_location::current())
         : stdexcept::logic_error{
                   "Buffer is too small\n"
                   "Wants " + std::to_string(wants)
@@ -28,8 +28,8 @@ namespace felspar::parse::binary {
         static void
                 check(std::size_t const wants,
                       std::size_t const has,
-                      felspar::source_location const &loc =
-                              felspar::source_location::current()) {
+                      std::source_location const &loc =
+                              std::source_location::current()) {
             if (wants > has) { throw buffer_too_small{wants, has, loc}; }
         }
     };
