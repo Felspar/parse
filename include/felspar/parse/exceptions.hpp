@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <felspar/exceptions.hpp>
+#include <felspar/exceptions/logic_error.hpp>
 
 
 namespace felspar::parse::binary {
